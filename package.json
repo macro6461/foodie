@@ -1,9 +1,13 @@
 {
   "name": "foodie",
-  "version": "1.0.2",
-  "description": "first foodie CLI",
+  "version": "1.0.4",
+  "description": "Foodie is the most delicious command line interface out there. Type in what you want to eat and let foodie find restuarants nearby to satisfy your cravings.",
   "main": "cli.js",
   "author": "matt croak",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/macro6461/foodie.git"
+  },
   "license": "MIT",
   "scripts": {
     "foodie": "node ./cli.js"

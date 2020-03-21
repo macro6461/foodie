@@ -3,7 +3,7 @@
 require('dotenv').config();
 const readline = require("readline");
 const fetch = require("node-fetch");
-var apiKey1 = process.env.API_KEY_1;
+var apiKey1 = process.env.API_KEY;
 var apiKey2 = process.env.API_KEY_2;
 var wifiscanner = require('node-wifiscanner')
 
@@ -266,7 +266,7 @@ const kirby = () =>{
 
 rl.on("close", function() {
     console.log('\n****REMEMBER****');
-    console.log("If you're project repo is public,\nbe sure to remove you API key\nfrom the config section of your\npackage.json before you commit!");
+    console.log("If you're project repo is public,\nbe sure that your .env file\nis in your .gitignore before you commit!");
     console.log("\nSTAY HUNGRY.");
     process.exit(0);
 });
