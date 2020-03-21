@@ -20,7 +20,8 @@ const rl = readline.createInterface({
 });
 
 const init = () =>{
-    rl.question("What are you hungry for? ", function(food) {
+    rl.question("\nWhat are you hungry for? ", function(food) {
+        console.log('\n')
         interval= kirby();
         wifiScan(food)
     });
@@ -77,7 +78,8 @@ const geoFetch = (macs, food) =>{
                 } else {
                     clearInterval(interval)
                     console.log('\nLocation not found. Please try again.')
-                    rl.question("What are you hungry for? ", function(food) {
+                    rl.question("\nWhat are you hungry for? ", function(food) {
+                        console.log('\n')
                         interval= kirby();
                         wifiScan(food)
                     });
@@ -137,8 +139,9 @@ const renderRestaurants = (data) => {
             console.log('Showing ' + newArr.length + ' results.\n')
             setTimeout(()=>{askSort(newArr)}, 100)
     } else {
-        console.log('No results found.\nPlease try to better specify your cravings.\n')
-        rl.question("What are you hungry for? ", function(food) {
+        console.log('No results found.\nPlease try to better specify your cravings.')
+        rl.question("\nWhat are you hungry for? ", function(food) {
+            console.log('\n')
             interval= kirby();
             placeSearch(here, 15, food)
         });

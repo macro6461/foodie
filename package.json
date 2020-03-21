@@ -1,6 +1,6 @@
 {
   "name": "foodie",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Foodie is the most delicious command line interface out there. Type in what you want to eat and let foodie find restuarants nearby to satisfy your cravings.",
   "main": "cli.js",
   "author": "matt croak",
