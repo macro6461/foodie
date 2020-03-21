@@ -12,7 +12,7 @@ npm install -g foodie
 
 ## Usage
 
-This CLI package uses both the Google Geolocation API and Places API. You will need to go to the credentials section of the Google Cloud Platform. Once there, click the "Create Credentials" button, and select "API Key". This key will be used for both APIs so it must be unrestricted. 
+This CLI package uses both the Google Geolocation API and Places API. You will need to go to the [credentials section](https://console.cloud.google.com/apis/credentials) of the Google Cloud Platform. Once there, click the "Create Credentials" button, and select "API Key". This key will be used for both APIs so it must be unrestricted. 
 
 However, should you want to restrict your API key, you will need to create a second one. The package allows for an optional second API key to be incorporated, just make sure the first key is for the Geolocation API and the second is for the Places API. 
 
