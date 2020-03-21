@@ -1,6 +1,8 @@
+#!/usr/bin/env node
 const readline = require("readline");
 const fetch = require("node-fetch");
-var apiKey = process.env.npm_package_config_apiKey;
+var apiKey1 = process.env.npm_package_config_apiKey1;
+var apiKey2 = process.env.npm_package_config_apiKey1;
 var wifiscanner = require('node-wifiscanner')
 
 var sortProps = [
@@ -23,23 +25,22 @@ const init = () =>{
 }
 
 const wifiScan = (food) =>{
-    wifiscanner.scan(function(err, data){
-        if (err) {
-            console.log("Error : " + err);
-            return;
-        }
-        return sortMacs(data, food);
-    });
+    if(apiKey1){
+        wifiscanner.scan(function(err, data){
+            if (err) {
+                console.log("Error : " + err);
+                return;
+            }
+            return formatMacs(data, food);
+        });
+    } else {
+        console.log('No API key found. Please add API key.')
+        rl.close()
+    }
 }
 
-const sortMacs = (data, food) =>{
-    var macs = data.sort((a,b)=>{
-        if (parseInt(a.signal_level) > parseInt(b.signal_level)){
-            return -1
-        } else {
-            return 1
-        }
-    }).slice(0, 3).map(x=>{
+const formatMacs = (data, food) =>{
+    var macs = data.map(x=>{
         var obj = {}
         obj['macAddress'] = x.mac 
         obj['ssid'] = x.ssid
@@ -55,7 +56,7 @@ const geoFetch = (macs, food) =>{
         "considerIp": "false",
         "wifiAccessPoints": macs
     }
-    fetch("https://www.googleapis.com/geolocation/v1/geolocate?key=" + apiKey, {
+    fetch("https://www.googleapis.com/geolocation/v1/geolocate?key=" + apiKey1, {
         method: "post",
         headers: {
             'Accept': 'application/json',
@@ -72,18 +73,22 @@ const geoFetch = (macs, food) =>{
                 if (here){
                     placeSearch(here, 15, food)  
                 } else {
-                    console.log('Location not found. Please try again.')
+                    clearInterval(interval)
+                    console.log('\nLocation not found. Please try again.')
                     rl.question("What are you hungry for? ", function(food) {
                         interval= kirby();
                         wifiScan(food)
                     });
-                }
-                placeSearch(here, 15, food)    
-        }});
+                }  
+        }}).catch((err)=> {
+            console.log('Error: ' + err)
+            rl.close()
+        })
 
 }
 
 const placeSearch = (here, radius, food) => {
+    var apiKey = apiKey2 ? apiKey2 : apiKey1
     var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + food + "&location=" + here['lat'] + "," + here['lng'] + "&radius=" + radius + "&key=" + apiKey;
 
     fetch(url)
@@ -98,7 +103,10 @@ const placeSearch = (here, radius, food) => {
             })
             clearInterval(interval)
             mySort(data, 'closest')
-        });
+        }).catch((err)=> {
+            console.log('Error: ' + err)
+            rl.close()
+        })
 };
 
 const renderRestaurants = (data) => {
@@ -118,15 +126,14 @@ const renderRestaurants = (data) => {
                 }
                 var line = '-----------------------------------------------------------'
                 var isOpen = x.opening_hours && x.opening_hours.open_now ? 'Open' : 'Closed';
-                var isLast = i !== newArr.length - 1 ? `\n${line}` : '\n\n';
+                var isLast = i !== newArr.length - 1 ? `\n${line}` : '';
                 var url = formatDirectionsUrl(x.formatted_address, x.geometry.location.lat, x.geometry.location.lng, i)
                 console.log(
                     `Name: ${x.name}\nAddress: ${x.formatted_address}\nRating: ${rating} | Price Rate: ${price}\nDistance: ${distance} | ${isOpen}\nDirections: ${url}\n${isLast}\n`)
             }
         }
-            console.log('poop')
-            console.log('Showing ' + newArr.length + ' results.')
-            askSort(newArr)
+            console.log('Showing ' + newArr.length + ' results.\n')
+            setTimeout(()=>{askSort(newArr)}, 100)
     } else {
         console.log('No results found.\nPlease try to better specify your cravings.\n')
         rl.question("What are you hungry for? ", function(food) {
@@ -169,8 +176,6 @@ const mySort = (data, input) =>{
             }
         
     });
-
-    sorted.forEach(x=>console.log(x.closest))
 
     sorted = nones.concat(sorted)
 
@@ -244,20 +249,6 @@ const twirlTimer = () => {
         process.stdout.write("\r" + P[x++]);
         x &= 3;
     }, 250);
-};
-
-const muncher = () =>{
-    var P = [">:(#)", ">:|"];
-    var sandwich = ['######', '#####', '####', '###', '##', '#'];
-    var x = 0;
-    var y = 0;
-    console.log('\n')
-    return setInterval(() => {
-        process.stdout.clearLine();
-        process.stdout.write("\r" + P[x++] + sandwich[y++]);
-        x = x > 1 ? 0 : x;
-        y = y > 5 ? 0 : y;
-    }, 300);
 };
 
 const kirby = () =>{

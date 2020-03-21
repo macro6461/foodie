@@ -1,14 +1,17 @@
 {
   "name": "foodie",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "first foodie CLI",
   "main": "index.js",
+  "bin": {
+    "foodie": "./index.js"
+  },
   "scripts": {
     "test": "foodie",
     "foodie": "node index.js"
   },
   "config": {
-    "apiKey": "YOUR_API_KEY"
+    "apiKey1": "YOUR_API_KEY"
   },
   "author": "matt croak",
   "license": "ISC",
