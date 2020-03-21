@@ -267,7 +267,8 @@ const kirby = () =>{
 rl.on("close", function() {
     console.log('\n****REMEMBER****');
     console.log("If you're project repo is public,\nbe sure that your .env file\nis in your .gitignore before you commit!");
-    console.log("\nSTAY HUNGRY. <(^o^)>");
+    console.log("\nSTAY HUNGRY");
+    console.log("\n<(^o^)>\n")
     process.exit(0);
 });
 
