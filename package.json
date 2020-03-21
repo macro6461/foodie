@@ -2,21 +2,20 @@
   "name": "foodie",
   "version": "1.0.1",
   "description": "first foodie CLI",
-  "main": "index.js",
-  "bin": {
-    "foodie": "./index.js"
-  },
+  "main": "cli.js",
+  "author": "matt croak",
+  "license": "MIT",
   "scripts": {
-    "test": "foodie",
-    "foodie": "node index.js"
+    "foodie": "./cli.js"
   },
   "config": {
     "apiKey1": "YOUR_API_KEY"
   },
-  "author": "matt croak",
-  "license": "ISC",
   "dependencies": {
     "node-fetch": "^2.6.0",
     "node-wifiscanner": "^0.2.1"
+  },
+  "bin": {
+    "foodie": "./cli.js"
   }
 }

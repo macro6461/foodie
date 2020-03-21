@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const readline = require("readline");
 const fetch = require("node-fetch");
 var apiKey1 = process.env.npm_package_config_apiKey1;
