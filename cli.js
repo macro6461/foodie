@@ -8,8 +8,8 @@ var apiKey2 = process.env.API_KEY_2;
 var wifiscanner = require('node-wifiscanner')
 
 var sortProps = [
-    {name: 'price_level', high: false, initial: false, text1: '(cheapest)', textOpts: ['(cheapest)', '(most expensive)']},
-    {name: 'closest', high: false, initial:false, text: ''},
+    {name: 'price', high: false, initial: false, text1: '(cheapest)', textOpts: ['(cheapest)', '(most expensive)']},
+    {name: 'distance', high: false, initial:false, text: ''},
     {name: 'rating', high: true, initial: true, text: '(best)', textOpts: ['(best)', '(worst)']}
 ]
 var interval, here;
@@ -103,10 +103,10 @@ const placeSearch = (here, radius, food) => {
             data.results.forEach(x=>{
                 var thereA = {lat: x.geometry.location.lat, lng: x.geometry.location.lng}
                 var distA = haversine(here, thereA);
-                x['closest'] = distA
+                x['distance'] = distA
             })
             clearInterval(interval)
-            mySort(data, 'closest')
+            mySort(data, 'distance')
         }).catch((err)=> {
             console.log('Error: ' + err)
             rl.close()
@@ -124,7 +124,7 @@ const renderRestaurants = (data) => {
             if (x) {
                 var rating = x.rating ? `${x.rating} (${x.user_ratings_total} reviews)` : `No Rating (${x.user_ratings_total} reviews)`;
                 var price = !x.price_level || x.price_level === 0 ? 'No Price' : '';
-                var distance = Math.max( Math.round(x.closest * 10) / 10).toFixed(2) + ' miles away'
+                var distance = Math.max( Math.round(x.distance * 10) / 10).toFixed(2) + ' miles away'
                 for (var y = 0; y < x.price_level; ++y) {
                     price += '$'
                 }
@@ -157,7 +157,7 @@ const mySort = (data, input) =>{
     var nones = []
     var sorts = newArr;
 
-    if (input === 'price_level'){
+    if (input === 'price'){
         nones = newArr.filter(x=>!x.price_level || x.price_level === 0)
         sorts = newArr.filter(x=>x.price_level > 0)
     } else if (input === 'rating'){
@@ -166,14 +166,15 @@ const mySort = (data, input) =>{
     }
 
      var sorted = sorts.sort((a, b)=>{
+         var sorter = input === 'price' ? "price_level" : input
             if (prop.high){
-                if (a[input] < b[input]){
+                if (a[sorter] < b[sorter]){
                     return -1
                 } else {
                     return 1
                 }
             } else {
-                if (a[input] > b[input]){
+                if (a[sorter] > b[sorter]){
                     return -1
                 } else {
                     return 1
@@ -184,7 +185,7 @@ const mySort = (data, input) =>{
 
     sorted = nones.concat(sorted)
 
-    prop.high = input !== 'closest' ? !prop.high : prop.high
+    prop.high = input !== 'distance' ? !prop.high : prop.high
     //reset other setProps values back to original high value
     sortProps.forEach(x=>{
         if (x.name !== prop.name){
@@ -197,7 +198,7 @@ const mySort = (data, input) =>{
 
 const askSort = (newArr) =>{
     var props = sortProps.map((prop, i)=>{
-            if (prop.name !== 'closest'){
+            if (prop.name !== 'distance'){
                 prop.text = prop.initial === prop.high ? prop.textOpts[0] :  prop.textOpts[1]
             }
         return (i===0 ? ' >' : '>') + ' ' + prop.name + ' ' + prop.text + '\n'
