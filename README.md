@@ -1,1 +1,1 @@
-![Example]('example.png')
+![Example]('https://imgur.com/a/gyPUyLw')
