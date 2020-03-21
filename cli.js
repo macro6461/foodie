@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
+require('dotenv').config();
 const readline = require("readline");
 const fetch = require("node-fetch");
-var apiKey1 = process.env.npm_package_config_apiKey1;
-var apiKey2 = process.env.npm_package_config_apiKey1;
+var apiKey1 = process.env.API_KEY_1;
+var apiKey2 = process.env.API_KEY_2;
 var wifiscanner = require('node-wifiscanner')
 
 var sortProps = [

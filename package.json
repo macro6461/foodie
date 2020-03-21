@@ -1,17 +1,15 @@
 {
   "name": "foodie",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "first foodie CLI",
   "main": "cli.js",
   "author": "matt croak",
   "license": "MIT",
   "scripts": {
-    "foodie": "./cli.js"
-  },
-  "config": {
-    "apiKey1": "YOUR_API_KEY"
+    "foodie": "node ./cli.js"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0",
     "node-wifiscanner": "^0.2.1"
   },
