@@ -1,6 +1,6 @@
 # Foodie
 
-Foodie is the most delicious command line interface out there. Type in what you want to eat and let foodie find restaurants nearby to satisfy your cravings..
+Foodie is the most delicious command line interface out there. Type in what you want to eat and let foodie find restaurants nearby to satisfy your cravings.
 
 ## Installation
 
@@ -34,6 +34,8 @@ You will then receive a prompt, asking what kind of food you want.
 `What are you hungry for?`
 
 Type in a type of food you are in the mood for, like Chinese, Mexican, sushi, Indian, and more (the search is not case sensitive).
+
+Alternatively, if you want to skip the initial prompt, you can simply write `foodie FOOD_TYPE` and the list will be generated in a few seconds. 
 
 You will then see a dancing 'kirby' (`<('o')>`) that will dance in the command line while you wait for your results are evaluated. When your are returned, you should see a list of restaurants that fall under whatever category you typed into the command line. The restaurants are ordered initially by how close they are to you. The closest restaurants will appear at the bottom of the list. 
 

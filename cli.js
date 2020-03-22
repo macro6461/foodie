@@ -7,6 +7,8 @@ var apiKey1 = process.env.API_KEY;
 var apiKey2 = process.env.API_KEY_2;
 var wifiscanner = require('node-wifiscanner')
 
+const [,, ...args] = process.argv;
+
 var sortProps = [
     {name: 'price', high: false, initial: false, text1: '(cheapest)', textOpts: ['(cheapest)', '(most expensive)']},
     {name: 'distance', high: false, initial:false, text: ''},
@@ -20,11 +22,17 @@ const rl = readline.createInterface({
 });
 
 const init = () =>{
-    rl.question("\nWhat are you hungry for? ", function(food) {
+    if (args[0]){
         console.log('\n')
         interval= kirby();
-        wifiScan(food)
-    });
+        wifiScan(args)
+    } else {
+        rl.question("\nWhat are you hungry for? ", function(food) {
+            console.log('\n')
+            interval= kirby();
+            wifiScan(food)
+        });
+    }
 }
 
 const wifiScan = (food) =>{
