@@ -1,8 +1,9 @@
 {
   "name": "foodie",
-  "version": "1.1.0",
-  "description": "Foodie is the most delicious command line interface out there. Type in what you want to eat and let foodie find restuarants nearby to satisfy your cravings.",
+  "version": "1.1.1",
+  "description": "Command line interface package that finds restaurants near your location. Uses Google Maps Places and Geolocation APIs.",
   "main": "cli.js",
+  "homepage": "https://github.com/macro6461/foodie#readme",
   "author": "matt croak",
   "repository": {
     "type": "git",
@@ -19,5 +20,19 @@
   },
   "bin": {
     "foodie": "./cli.js"
-  }
+  },
+  "keywords": [
+    "food",
+    "restaurants",
+    "location",
+    "cli",
+    "geolocation",
+    "promise",
+    "async",
+    "wifi",
+    "wifi trilateration",
+    "google maps",
+    "gps",
+    "mac address"
+  ]
 }
